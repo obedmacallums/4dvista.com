@@ -22,7 +22,6 @@ export const headerData = {
       text: 'Contáctanos',
       href: getPermalink('/#contact'),
     },
-    
   ],
   actions: [{ text: 'Download', href: 'https://github.com/arthelokyo/astrowind', target: '_blank' }],
 };
