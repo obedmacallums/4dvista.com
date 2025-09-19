@@ -39,3 +39,32 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+
+  astro-build:
+    needs: [build, check]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Install, build, and upload your site
+        uses: withastro/action@v4
+        with:
+          path: . # The root location of your Astro project inside the repository. (optional)
+          # node-version: 22 # The specific version of Node that should be used to build your site. Defaults to 22. (optional)
+          # package-manager: npm # The Node package manager that should be used to install dependencies and build your site. (optional)
+
+  deploy:
+    needs: astro-build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
