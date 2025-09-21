@@ -1,6 +1,6 @@
 site:
-  name: AstroWind
-  site: 'http://localhost:4321' # Se sobreescribe en astro.config.ts para GitHub Pages
+  name: 4dvista.com
+  site: 'https://4dvista.com' # Se sobreescribe en astro.config.ts para GitHub Pages
   base: '/' # Se sobreescribe en astro.config.ts para GitHub Pages
   trailingSlash: false
 
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
+    default: 4dvista.com
+    template: '%s — 4dvista.com'
   description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: 4dvista.com
     images:
       - url: '~/assets/images/default.png'
         width: 1200

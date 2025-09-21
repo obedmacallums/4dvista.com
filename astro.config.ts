@@ -21,15 +21,8 @@ const hasExternalScripts = false;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
-// Configuración condicional para desarrollo local vs GitHub Pages
-const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
-
 export default defineConfig({
   output: 'static',
-
-  // Configuración condicional para GitHub Pages
-  site: isGitHubPages ? 'https://obedmacallums.github.io/4dvista.com' : 'http://localhost:4321',
-  base: isGitHubPages ? '/4dvista.com/' : '/',
 
   integrations: [
     tailwind({
