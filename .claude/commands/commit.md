@@ -9,12 +9,6 @@ description: Create well-formatted commits with conventional commit format and e
 
 Create well-formatted commit: $ARGUMENTS
 
-
-
-
-
-
-
 ## Current Repository State
 
 - Git status: !`git status --porcelain`
@@ -28,7 +22,7 @@ Create well-formatted commit: $ARGUMENTS
 1. Unless specified with `--no-verify`, automatically runs pre-commit checks:
    - `npm run check` to ensure code quality (includes astro check, eslint, and prettier)
    - `npm run build` to verify the build succeeds
-   - `npm run fix` to automatically fix any formatting issues
+   - `npm run fix` to automatically fix any formatting issues (includes MD files)
 2. Checks which files are staged with `git status`
 3. If 0 files are staged, automatically adds all modified and new files with `git add`
 4. Performs a `git diff` to understand what changes are being committed
@@ -165,7 +159,7 @@ Example of splitting commits:
 
 ## Important Notes
 
-- By default, pre-commit checks (`npm run check`, `npm run build`, `npm run fix`) will run to ensure code quality
+- By default, pre-commit checks (`npm run check`, `npm run build`, `npm run fix`) will run to ensure code quality and format all files including MD
 - If these checks fail, you'll be asked if you want to proceed with the commit anyway or fix the issues first
 - If specific files are already staged, the command will only commit those files
 - If no files are staged, it will automatically stage all modified and new files
