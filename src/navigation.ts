@@ -88,6 +88,6 @@ export const footerData = {
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/arthelokyo/astrowind' },
   ],
   footNote: `
-    Hecho por <a class="text-blue-600 underline dark:text-muted" href="https://github.com/obedmacallums"> obedmacallums</a>
+    Hecho por <a class="text-blue-600 underline dark:text-muted" href="https://4dvista.com"> 4dvista.com</a>
   `,
 };
