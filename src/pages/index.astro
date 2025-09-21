@@ -18,7 +18,7 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <Fragment slot="header">
-    <Header {...headerData} isSticky />
+    <Header {...headerData} isSticky showToggleTheme />
   </Fragment>
 
   <!-- Hero2 Widget ******************* -->
@@ -325,7 +325,7 @@ const metadata = {
     subtitle="Have questions? Feel free to contact us using the form below. We're here to help!"
     callToAction={{
       text: 'Cuéntanos de tu proyecto',
-      href: '/',
+      href: '/contact',
     }}
     items={[
       {
@@ -341,7 +341,7 @@ const metadata = {
       {
         title: 'Follow us',
         description: '@example',
-        icon: 'tabler:brand-twitter',
+        icon: 'tabler:brand-instagram',
       },
     ]}
   >
