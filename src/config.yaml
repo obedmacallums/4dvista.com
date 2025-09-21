@@ -1,7 +1,7 @@
 site:
   name: AstroWind
-  site: 'https://obedmacallums.github.io/4dvista.com'
-  base: '/4dvista.com/'
+  site: 'http://localhost:4321'  # Se sobreescribe en astro.config.ts para GitHub Pages
+  base: '/'                      # Se sobreescribe en astro.config.ts para GitHub Pages
   trailingSlash: false
 
   googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
