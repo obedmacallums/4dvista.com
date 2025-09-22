@@ -22,7 +22,7 @@ export const headerData = {
   actions: [
     {
       text: 'Contáctenos',
-      href: '/#contact',
+      href: '/contact',
 
       target: '_blank',
     },
