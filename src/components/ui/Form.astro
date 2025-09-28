@@ -5,7 +5,7 @@ import Button from '~/components/ui/Button.astro';
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
 ---
 
-<form>
+<form id="contact-form" onsubmit="return false;">
   {
     inputs &&
       inputs.map(
@@ -24,6 +24,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 autocomplete={autocomplete}
                 placeholder={placeholder}
                 class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+                required
               />
             </div>
           )
@@ -42,6 +43,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+          required
         />
       </div>
     )
@@ -85,3 +87,29 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 </form>
+
+<script>
+  import { initializeContactForm } from '../../scripts/contact-form';
+
+  const initForm = () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    if (form) {
+      const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalButtonText = button?.textContent?.trim() || 'Contact us';
+      initializeContactForm(form, originalButtonText);
+    }
+  };
+
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', initForm);
+
+  // Re-initialize when navigating (for SPA behavior)
+  document.addEventListener('astro:page-load', initForm);
+
+  // Also initialize immediately if DOM is already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initForm);
+  } else {
+    initForm();
+  }
+</script>
