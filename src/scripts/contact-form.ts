@@ -109,12 +109,35 @@ export const initializeContactForm = (
 
   // Re-get references after cloning
   const newSubmitButton = newForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const disclaimerCheckbox = newForm.querySelector('input[name="disclaimer"]') as HTMLInputElement;
   let newMessageContainer = newForm.querySelector('.form-message') as HTMLDivElement;
 
   if (!newMessageContainer) {
     newMessageContainer = document.createElement('div');
     newMessageContainer.className = 'form-message mt-4 p-3 rounded-md hidden';
     newForm.appendChild(newMessageContainer);
+  }
+
+  // Function to update submit button state based on disclaimer checkbox
+  const updateSubmitButtonState = () => {
+    if (newSubmitButton && disclaimerCheckbox) {
+      newSubmitButton.disabled = !disclaimerCheckbox.checked;
+
+      // Update button appearance when disabled
+      if (disclaimerCheckbox.checked) {
+        newSubmitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        newSubmitButton.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    }
+  };
+
+  // Initialize submit button state (disabled by default if disclaimer exists)
+  if (disclaimerCheckbox) {
+    updateSubmitButtonState();
+
+    // Add event listener for checkbox changes
+    disclaimerCheckbox.addEventListener('change', updateSubmitButtonState);
   }
 
   newForm.addEventListener('submit', async (e) => {
