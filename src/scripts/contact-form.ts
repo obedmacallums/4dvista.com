@@ -55,7 +55,7 @@ const sendEmail = async (formData: ContactFormData): Promise<EmailResponse> => {
       from_email: formData.email,
       email: `${config.toEmail}, ${formData.email}`,
       message: formData.message,
-      to_name: '4DVista Team',
+      to_name: '4Dvista Team',
     };
 
     console.log('Template params:', templateParams);
