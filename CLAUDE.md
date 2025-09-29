@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 **Essential Commands:**
+
 - `npm run dev` - Start development server at localhost:4321
 - `npm run build` - Build production site to ./dist/
 - `npm run preview` - Preview production build locally
@@ -12,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run fix` - Fix ESLint and Prettier issues automatically
 
 **Individual Check Commands:**
+
 - `npm run check:astro` - Run Astro check for TypeScript and component issues
 - `npm run check:eslint` - Run ESLint for code quality
 - `npm run check:prettier` - Check code formatting
@@ -49,12 +51,14 @@ This is an **Astro 5.0 + Tailwind CSS** website based on the AstroWind template,
 ## Content Management
 
 **Blog System:**
+
 - Posts located in `src/data/post/` as .md/.mdx files
 - Blog enabled via `apps.blog.isEnabled: true` in config.yaml
 - Support for categories, tags, and related posts
 - Custom permalink structure: `/%slug%`
 
 **Languages:**
+
 - Primary language: Spanish (`i18n.language: es`)
 - Site domain: 4dvista.com
 
