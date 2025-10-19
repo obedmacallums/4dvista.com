@@ -16,7 +16,7 @@ export const headerData = {
     },
     {
       text: 'Ejemplos',
-      href: getPermalink('/#blog'),
+      href: getPermalink('/#examples'),
     },
   ],
   actions: [
