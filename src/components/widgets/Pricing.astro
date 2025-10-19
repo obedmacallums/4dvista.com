@@ -15,6 +15,7 @@ const {
   isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),
+  content = await Astro.slots.render('content'),
 } = Astro.props;
 ---
 
@@ -81,4 +82,5 @@ const {
       }
     </div>
   </div>
+  {content && <Fragment set:html={content} />}
 </WidgetWrapper>

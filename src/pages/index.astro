@@ -225,7 +225,7 @@ const metadata = {
   <Prices
     title="Nuestros Precios"
     id="pricing"
-    subtitle="Tarifas estándar para proyectos específicos <br><span class='text-sm text-gray-600 dark:text-gray-400'>Válido para Santiago de Chile, Región Metropolitana</span> <br> <span class='text-sm'>Para proyectos personalizados <a href='#contact' class='text-muted hover:text-gray-700 underline dark:text-gray-400 transition duration-150 ease-in-out'>contáctanos</a></span>"
+    subtitle="Tarifas estándar para proyectos específicos<br>Para proyectos personalizados <a href='#contact' class='text-muted hover:text-gray-700 underline dark:text-gray-400 transition duration-150 ease-in-out'>contáctanos</a>"
     prices={[
       {
         title: 'Tour Antes y después',
@@ -320,6 +320,14 @@ const metadata = {
       },
     ]}
   >
+    <Fragment slot="content">
+      <div class="text-center mt-8">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Estos planes están disponibles solo en la Región Metropolitana de Santiago.
+        </p>
+      </div>
+    </Fragment>
+
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
