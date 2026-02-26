@@ -6,7 +6,7 @@ import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
 import Content from '~/components/widgets/Content.astro';
-import Prices from '~/components/widgets/Pricing.astro';
+// import Prices from '~/components/widgets/Pricing.astro';
 
 import { headerData } from '~/navigation';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
@@ -61,7 +61,7 @@ const metadata = {
       {
         title: '',
         description:
-          'Capturamos espacios completos en 360 grados mediante fotografía y video equirectangular, permitiendo a tus clientes explorar cada rincón de forma inmersiva desde cualquier dispositivo. Navegación interactiva que simula una visita presencial.',
+          'Capturamos espacios completos en 360 grados mediante fotografía y video 360, permitiendo a tus clientes explorar cada rincón de forma inmersiva desde cualquier dispositivo. Navegación interactiva que simula una visita presencial.',
       },
       {
         title: '',
@@ -75,7 +75,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Tour Virtual 360°:<br /><span class="text-2xl">Modelos 3D, Fotografía y Video equirectangular</span>
+        Tour Virtual 360°:<br /><span class="text-2xl">Modelos 3D, Fotografía y Video 360</span>
       </h3>
     </Fragment>
 
@@ -88,6 +88,37 @@ const metadata = {
 
   <Content
     isAfterContent={true}
+    items={[
+      {
+        title: '',
+        description: `Capturamos fotografías 360 para crear recorridos interactivos del interior de tu local, vinculándolos directamente con la plataforma de Google Street View. Abre las puertas de tu negocio al mundo digital para que tus clientes exploren, interactúen y conecten con tu espacio desde cualquier dispositivo.`,
+      },
+      {
+        title: '',
+        description: `• Atrae a más clientes destacando tu negocio en Google Maps. <br /> • Genera mayor confianza al mostrar tus instalaciones on line. <br /> • Mejora el posicionamiento y las visitas a tu perfil. <br /> • Facilita la decisión de compra al familiarizar al usuario con tu entorno antes de ir físicamente.`,
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1531973486364-5fa64260d75b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1658&q=80',
+      alt: 'SaaS Businesses Image',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Google Street View: <br /><span class="text-2xl">Tour 360° dentro de Google Maps</span>
+      </h3>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    isAfterContent={true}
+    isReversed
     items={[
       {
         title: '',
@@ -117,7 +148,6 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
-    isReversed
     isAfterContent={true}
     items={[
       {
@@ -148,6 +178,7 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
+    isReversed
     items={[
       {
         title: '',
@@ -223,7 +254,8 @@ const metadata = {
 
   <!-- Pricing Widget ******************* -->
 
-  <Prices
+  {
+    /* <Prices
     title="Nuestros Precios"
     id="pricing"
     subtitle="Tarifas estándar para proyectos específicos<br>Para proyectos personalizados <a href='#contact' class='text-muted hover:text-gray-700 underline dark:text-gray-400 transition duration-150 ease-in-out'>contáctanos</a>"
@@ -333,7 +365,8 @@ const metadata = {
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
-  </Prices>
+  </Prices> */
+  }
 
   <!-- BlogHighlightedPosts Widget **************** -->
 
