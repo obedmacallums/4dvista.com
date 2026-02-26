@@ -18,6 +18,10 @@ export const headerData = {
       text: 'Ejemplos',
       href: getPermalink('/#examples'),
     },
+    {
+      text: 'Blog',
+      href: getPermalink('/#blog'),
+    },
   ],
   actions: [
     {
