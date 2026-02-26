@@ -10,10 +10,10 @@ export const headerData = {
       text: '¿Dónde funciona?',
       href: getPermalink('/#features'),
     },
-    {
-      text: 'Precios',
-      href: getPermalink('/#pricing'),
-    },
+    // {
+    //   text: 'Precios',
+    //   href: getPermalink('/#pricing'),
+    // },
     {
       text: 'Ejemplos',
       href: getPermalink('/#examples'),
