@@ -9,6 +9,8 @@ import Content from '~/components/widgets/Content.astro';
 // import Prices from '~/components/widgets/Pricing.astro';
 
 import { headerData } from '~/navigation';
+import imageTour360 from '~/assets/images/image1_tour360.webp';
+import imageStreetView from '~/assets/images/Image2StreetView.webp';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import BlogHighlightedPosts from '~/components/widgets/BlogHighlightedPosts.astro';
 
@@ -69,8 +71,8 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1620558138198-cfb9b4f3c294?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1671&q=80',
-      alt: 'Startup Image',
+      src: imageTour360,
+      alt: 'Tour Virtual 360°',
     }}
   >
     <Fragment slot="content">
@@ -99,8 +101,8 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1531973486364-5fa64260d75b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1658&q=80',
-      alt: 'SaaS Businesses Image',
+      src: imageStreetView,
+      alt: 'Google Street View',
     }}
   >
     <Fragment slot="content">
@@ -114,8 +116,7 @@ const metadata = {
     </Fragment>
   </Content>
 
-  <!-- Content Widget **************** -->
-
+  <!-- Content Widget: Modelado y renderizado 3D (oculto)
   <Content
     isAfterContent={true}
     isReversed
@@ -144,11 +145,11 @@ const metadata = {
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
-
-  <!-- Content Widget **************** -->
+  -->
 
   <Content
     isAfterContent={true}
+    isReversed
     items={[
       {
         title: '',
@@ -178,7 +179,6 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
-    isReversed
     items={[
       {
         title: '',
