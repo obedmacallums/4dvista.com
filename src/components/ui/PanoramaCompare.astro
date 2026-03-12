@@ -1,0 +1,187 @@
+---
+interface Props {
+  beforeImage: string;
+  afterImage: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  autoRotate?: number;
+  pitch?: number;
+  yaw?: number;
+  hfov?: number;
+  class?: string;
+}
+
+const {
+  beforeImage,
+  afterImage,
+  beforeLabel = 'Antes',
+  afterLabel = 'Después',
+  autoRotate = -2,
+  pitch = 0,
+  yaw = 0,
+  hfov = 100,
+  class: className = '',
+} = Astro.props;
+---
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+
+<div class:list={['panorama-compare relative w-full overflow-hidden rounded-lg', className]} style="aspect-ratio: 4/3;">
+  <!-- After viewer (bottom layer) -->
+  <div id="pano-compare-after" class="absolute inset-0"></div>
+
+  <!-- Before viewer (top layer, clipped) -->
+  <div id="pano-compare-before-clip" class="pointer-events-none absolute inset-0" style="clip-path: inset(0 50% 0 0);">
+    <div id="pano-compare-before" class="absolute inset-0"></div>
+  </div>
+
+  <!-- Labels -->
+  <div class="absolute top-3 left-3 z-20 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
+    {beforeLabel}
+  </div>
+  <div class="absolute top-3 right-3 z-20 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
+    {afterLabel}
+  </div>
+
+  <!-- Draggable divider -->
+  <div
+    id="pano-divider"
+    class="absolute top-0 bottom-0 z-30 flex items-center"
+    style="left: 50%; transform: translateX(-50%); cursor: ew-resize;"
+  >
+    <div class="h-full w-1 bg-white shadow-md"></div>
+    <div
+      class="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-gray-700"
+      >
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-gray-700 -ml-2"
+      >
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script is:inline define:vars={{ beforeImage, afterImage, autoRotate, pitch, yaw, hfov }}>
+  document.addEventListener('astro:page-load', function () {
+    const container = document.querySelector('.panorama-compare');
+    const beforeEl = document.getElementById('pano-compare-before');
+    const afterEl = document.getElementById('pano-compare-after');
+    const clipEl = document.getElementById('pano-compare-before-clip');
+    const divider = document.getElementById('pano-divider');
+
+    if (!container || !beforeEl || !afterEl || typeof pannellum === 'undefined') return;
+
+    // Lazy init: only initialize when visible
+    const initObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            initObserver.disconnect();
+            initViewers();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    initObserver.observe(container);
+
+    function initViewers() {
+      // Clear previous instances
+      if (beforeEl.children.length > 0) beforeEl.innerHTML = '';
+      if (afterEl.children.length > 0) afterEl.innerHTML = '';
+
+      const commonConfig = {
+        type: 'equirectangular',
+        autoLoad: true,
+        autoRotate: autoRotate,
+        pitch: pitch,
+        yaw: yaw,
+        hfov: hfov,
+        compass: false,
+        showZoomCtrl: false,
+        showFullscreenCtrl: false,
+        mouseZoom: false,
+      };
+
+      // "before" has no autoRotate — it just follows "after"
+      const viewerBefore = pannellum.viewer(
+        'pano-compare-before',
+        Object.assign({}, commonConfig, { panorama: beforeImage, autoRotate: 0 })
+      );
+      const viewerAfter = pannellum.viewer(
+        'pano-compare-after',
+        Object.assign({}, commonConfig, { panorama: afterImage })
+      );
+
+      // All interaction goes to the "after" viewer (bottom layer).
+      // The "before" viewer follows it frame by frame with no animation.
+      function syncLoop() {
+        if (!document.contains(container)) return;
+        viewerBefore.setPitch(viewerAfter.getPitch(), false);
+        viewerBefore.setYaw(viewerAfter.getYaw(), false);
+        viewerBefore.setHfov(viewerAfter.getHfov(), false);
+        requestAnimationFrame(syncLoop);
+      }
+      requestAnimationFrame(syncLoop);
+
+      // Divider drag logic
+      let isDragging = false;
+
+      function updateDivider(clientX) {
+        const rect = container.getBoundingClientRect();
+        let percent = ((clientX - rect.left) / rect.width) * 100;
+        percent = Math.max(5, Math.min(95, percent));
+        clipEl.style.clipPath = 'inset(0 ' + (100 - percent) + '% 0 0)';
+        divider.style.left = percent + '%';
+      }
+
+      divider.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (isDragging) updateDivider(e.clientX);
+      });
+      document.addEventListener('mouseup', function () {
+        isDragging = false;
+      });
+
+      // Touch support
+      divider.addEventListener('touchstart', function (e) {
+        isDragging = true;
+        e.preventDefault();
+      });
+      document.addEventListener('touchmove', function (e) {
+        if (isDragging) updateDivider(e.touches[0].clientX);
+      });
+      document.addEventListener('touchend', function () {
+        isDragging = false;
+      });
+    }
+  });
+</script>

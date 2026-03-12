@@ -15,6 +15,7 @@ import imageCatedral from '~/assets/images/LIDAR_CATEDRAL.webp';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import BlogHighlightedPosts from '~/components/widgets/BlogHighlightedPosts.astro';
 import Panorama360 from '~/components/ui/Panorama360.astro';
+import PanoramaCompare from '~/components/ui/PanoramaCompare.astro';
 
 const metadata = {
   title: '4dvista.com',
@@ -189,16 +190,20 @@ const metadata = {
         description: `• Seguimiento visual del progreso de obra. <br /> • Documentación del ciclo de vida completo de proyectos. <br /> • Transparencia para inversionistas y stakeholders. <br /> • Herramienta de marketing que muestra la evolución de tu proyecto. <br /> • Registro histórico permanente para análisis y reportes.`,
       },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1514621166532-aa7eb1a3a2f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
-      alt: 'Small Business Image',
-    }}
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
         Tour virtual 4D: <br /><span class="text-2xl">Capturas multitemporales</span>
       </h3>
     </Fragment>
+
+    <PanoramaCompare
+      slot="image-slot"
+      beforeImage="/images/hero-panorama.webp"
+      afterImage="/images/hero-panorama.webp"
+      beforeLabel="Antes"
+      afterLabel="Después"
+    />
 
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
