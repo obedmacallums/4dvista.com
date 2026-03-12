@@ -33,14 +33,20 @@ const {
   <!-- Before viewer (top layer, clipped) -->
   <div id="pano-compare-before-clip" class="pointer-events-none absolute inset-0" style="clip-path: inset(0 50% 0 0);">
     <div id="pano-compare-before" class="absolute inset-0"></div>
+    <div class="absolute bottom-3 left-3 z-20 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
+      {beforeLabel}
+    </div>
   </div>
 
-  <!-- Labels -->
-  <div class="absolute top-3 left-3 z-20 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
-    {beforeLabel}
-  </div>
-  <div class="absolute top-3 right-3 z-20 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
-    {afterLabel}
+  <!-- After label (clipped to right side of divider) -->
+  <div
+    id="pano-label-after-clip"
+    class="pointer-events-none absolute inset-0 z-20"
+    style="clip-path: inset(0 0 0 50%);"
+  >
+    <div class="absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
+      {afterLabel}
+    </div>
   </div>
 
   <!-- Draggable divider -->
@@ -92,6 +98,7 @@ const {
     const beforeEl = document.getElementById('pano-compare-before');
     const afterEl = document.getElementById('pano-compare-after');
     const clipEl = document.getElementById('pano-compare-before-clip');
+    const afterLabelClip = document.getElementById('pano-label-after-clip');
     const divider = document.getElementById('pano-divider');
 
     if (!container || !beforeEl || !afterEl || typeof pannellum === 'undefined') return;
@@ -157,6 +164,7 @@ const {
         let percent = ((clientX - rect.left) / rect.width) * 100;
         percent = Math.max(5, Math.min(95, percent));
         clipEl.style.clipPath = 'inset(0 ' + (100 - percent) + '% 0 0)';
+        afterLabelClip.style.clipPath = 'inset(0 0 0 ' + percent + '%)';
         divider.style.left = percent + '%';
       }
 
