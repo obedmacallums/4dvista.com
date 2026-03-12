@@ -19,21 +19,22 @@ const viewerId = 'hero-panorama';
 
 <script is:inline src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 <script is:inline define:vars={{ viewerId, imageUrl, autoRotate, pitch, yaw, hfov }}>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (typeof pannellum !== 'undefined') {
-      pannellum.viewer(viewerId, {
-        type: 'equirectangular',
-        panorama: imageUrl,
-        autoLoad: true,
-        autoRotate: autoRotate,
-        pitch: pitch,
-        yaw: yaw,
-        hfov: hfov,
-        compass: false,
-        showZoomCtrl: false,
-        showFullscreenCtrl: true,
-        mouseZoom: false,
-      });
-    }
+  document.addEventListener('astro:page-load', function () {
+    const container = document.getElementById(viewerId);
+    if (!container || typeof pannellum === 'undefined') return;
+    if (container.children.length > 0) container.innerHTML = '';
+    pannellum.viewer(viewerId, {
+      type: 'equirectangular',
+      panorama: imageUrl,
+      autoLoad: true,
+      autoRotate: autoRotate,
+      pitch: pitch,
+      yaw: yaw,
+      hfov: hfov,
+      compass: false,
+      showZoomCtrl: false,
+      showFullscreenCtrl: true,
+      mouseZoom: false,
+    });
   });
 </script>
