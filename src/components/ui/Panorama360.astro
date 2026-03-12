@@ -1,0 +1,39 @@
+---
+interface Props {
+  imageUrl: string;
+  autoRotate?: number;
+  pitch?: number;
+  yaw?: number;
+  hfov?: number;
+  class?: string;
+}
+
+const { imageUrl, autoRotate = -2, pitch = 0, yaw = 0, hfov = 100, class: className = '' } = Astro.props;
+
+const viewerId = 'hero-panorama';
+---
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+
+<div id={viewerId} class:list={['w-full rounded-md overflow-hidden', className]} style="aspect-ratio: 4/3;"></div>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script is:inline define:vars={{ viewerId, imageUrl, autoRotate, pitch, yaw, hfov }}>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof pannellum !== 'undefined') {
+      pannellum.viewer(viewerId, {
+        type: 'equirectangular',
+        panorama: imageUrl,
+        autoLoad: true,
+        autoRotate: autoRotate,
+        pitch: pitch,
+        yaw: yaw,
+        hfov: hfov,
+        compass: false,
+        showZoomCtrl: false,
+        showFullscreenCtrl: true,
+        mouseZoom: false,
+      });
+    }
+  });
+</script>
