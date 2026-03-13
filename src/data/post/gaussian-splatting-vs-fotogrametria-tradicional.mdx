@@ -1,0 +1,141 @@
+---
+publishDate: 2026-03-13T00:00:00Z
+title: 'Gaussian Splatting vs. Fotogrametría Tradicional'
+excerpt: Ambas técnicas comparten el mismo objetivo, reconstruir una representación 3D de una escena a partir de fotografías, la diferencia está en cómo lo logran.
+image: ~/assets/images/3dgs.webp
+category: Tecnología
+tags:
+  - fotogrametría
+  - gaussian splatting
+  - 3D
+  - blog
+author: 4dvista
+metadata:
+  canonical: 'https://4dvista.com/gaussian-splatting-vs-fotogrametria-tradicional'
+  description: 'Comparativa técnica entre Gaussian Splatting y fotogrametría tradicional: precisión geométrica, renderizado en tiempo real, y casos de uso.'
+  openGraph:
+    type: article
+---
+
+import diagram3dgs from '~/assets/images/3dgsvsphoto.webp';
+
+La reconstrucción 3D a partir de fotografías ha sido durante décadas uno de los grandes desafíos de la visión por computador. En los últimos años, una nueva técnica llamada **3D Gaussian Splatting (3DGS)** ha irrumpido con fuerza, ofreciendo renderizado en tiempo real con una calidad visual sorprendente. Pero, ¿significa esto que la fotogrametría tradicional quedó obsoleta?
+
+En este artículo comparamos ambos enfoques en profundidad: cómo funcionan, en qué destacan y cuándo conviene usar cada uno.
+
+## Fotogrametría Tradicional
+
+La fotogrametría tradicional reconstruye geometría 3D explícita — mallas de triángulos con texturas — a partir de múltiples fotografías de una escena u objeto. El proceso sigue un pipeline bien establecido:
+
+1. **Structure from Motion (SfM):** Se detectan puntos característicos en las imágenes (como esquinas o bordes) y se emparejan entre fotografías. A partir de estas correspondencias se estiman las posiciones de las cámaras y se genera una nube de puntos dispersa.
+
+2. **Multi-View Stereo (MVS):** Se densifica la nube de puntos comparando parches de imagen entre múltiples vistas, produciendo millones de puntos 3D.
+
+3. **Reconstrucción de superficie:** La nube densa se convierte en una malla de triángulos mediante algoritmos como Poisson Surface Reconstruction o Delaunay.
+
+4. **Texturizado:** Se proyectan las fotografías originales sobre la malla para generar mapas de textura de alta resolución.
+
+El resultado es un modelo 3D convencional — un archivo con geometría y texturas — compatible con motores de videojuegos, software CAD, herramientas de medición y prácticamente cualquier visor 3D.
+
+**Herramientas populares:** Agisoft Metashape, RealityCapture, COLMAP, OpenDroneMap, Meshroom.
+
+## 3D Gaussian Splatting
+
+3D Gaussian Splatting (3DGS), presentado por Kerbl et al. en 2023, toma un camino radicalmente distinto. En lugar de reconstruir una superficie explícita, representa la escena como una colección de **millones de gaussianas 3D** — primitivas volumétricas elipsoidales, cada una definida por:
+
+- **Posición** (centro en el espacio 3D)
+- **Covarianza** (forma y orientación de la elipsoide)
+- **Opacidad**
+- **Color** (representado mediante armónicos esféricos para capturar efectos dependientes del ángulo de vista)
+
+Para renderizar una imagen, estas gaussianas se proyectan (_splatean_) sobre el plano de la imagen y se combinan mediante _alpha compositing_ de adelante hacia atrás. El proceso es completamente diferenciable, lo que permite optimizar todos los parámetros mediante descenso de gradiente comparando las imágenes renderizadas con las fotografías de entrenamiento.
+
+### Ventajas clave de 3DGS
+
+- **Renderizado en tiempo real:** Al no requerir ray marching ni evaluación de redes neuronales por píxel, 3DGS logra tasas de frames de 30 fps o más a resolución Full HD en GPUs modernas.
+- **Calidad visual excepcional:** Captura efectos complejos como reflejos, transparencias parciales y detalles finos de vegetación que son difíciles de modelar con mallas.
+- **Entrenamiento rápido:** Una escena puede optimizarse en minutos a pocas horas, comparado con horas o días para NeRF.
+
+## Formatos de almacenamiento y distribución
+
+Una diferencia práctica importante está en los formatos de salida:
+
+**Fotogrametría tradicional** produce archivos estándar de la industria 3D:
+
+- Mallas: OBJ, FBX, glTF/GLB, PLY
+- Texturas: JPEG, PNG, TIFF
+- Nubes de puntos: LAS, LAZ, E57
+
+Estos formatos son universalmente compatibles con motores como Unity, Unreal Engine, Blender, software GIS y aplicaciones CAD.
+
+**3D Gaussian Splatting** utiliza formatos propios:
+
+- Archivos PLY con atributos extendidos (posición, covarianza, armónicos esféricos)
+- Formatos comprimidos como `.splat` y `.ksplat`
+
+La visualización de archivos 3DGS requiere visores especializados o bibliotecas como GaussianSplats3D, Luma AI o SuperSplat. La integración en pipelines de producción existentes todavía está en desarrollo, aunque el ecosistema crece rápidamente.
+
+## Más allá de las escenas estáticas
+
+Ambas técnicas están evolucionando hacia la captura dinámica:
+
+**Fotogrametría** puede procesar secuencias temporales capturando el mismo objeto en distintos momentos, generando una malla por frame. Esto es costoso computacionalmente pero produce geometría editada frame a frame.
+
+**3DGS dinámico** (4D Gaussian Splatting) extiende el modelo añadiendo una dimensión temporal. Trabajos como Dynamic 3D Gaussians y 4D Gaussian Splatting permiten reconstruir escenas en movimiento a partir de video multi-cámara, representando deformaciones y movimientos con campos de deformación o gaussianas con trayectorias temporales.
+
+Para aplicaciones de visualización inmersiva — como las que desarrollamos en 4DVISTA — esta capacidad de capturar y reproducir escenas dinámicas en tiempo real abre posibilidades enormes.
+
+<img
+  src={diagram3dgs.src}
+  alt="Diagrama comparativo entre Fotogrametría Tradicional y 3D Gaussian Splatting: pipelines, representaciones y diferencias clave"
+  width={diagram3dgs.width}
+  height={diagram3dgs.height}
+  loading="lazy"
+  decoding="async"
+  style="border-radius: 12px; width: 100%;"
+/>
+
+## Precisión geométrica
+
+Uno de los aspectos más críticos al elegir entre estas técnicas es la precisión de la geometría resultante:
+
+| Aspecto                        | Fotogrametría Tradicional                          | 3D Gaussian Splatting                               |
+| ------------------------------ | -------------------------------------------------- | --------------------------------------------------- |
+| **Representación**             | Malla de triángulos explícita                      | Nube de gaussianas volumétricas                     |
+| **Precisión métrica**          | Sub-milimétrica (con puntos de control)            | No garantizada; optimizada para apariencia visual   |
+| **Mediciones**                 | Sí — distancias, áreas, volúmenes                  | Limitada — requiere extracción de geometría         |
+| **Calidad visual**             | Alta, limitada por resolución de textura           | Muy alta — captura efectos de iluminación complejos |
+| **Renderizado en tiempo real** | Requiere LOD y optimización                        | Nativo — 30+ fps en GPU moderna                     |
+| **Edición del modelo**         | Total — herramientas 3D estándar                   | Limitada — editores especializados                  |
+| **Tamaño de archivo**          | Variable — mallas + texturas pueden ser pesadas    | Generalmente más compacto para calidad equivalente  |
+| **Compatibilidad**             | Universal                                          | Ecosistema en crecimiento                           |
+| **Casos de uso ideales**       | Topografía, BIM, patrimonio, inspección industrial | Visualización inmersiva, tours virtuales, marketing |
+
+En resumen: la fotogrametría tradicional produce geometría medible y editable; 3DGS produce visualizaciones fotorrealistas en tiempo real pero con geometría implícita.
+
+## Avances recientes en 3DGS
+
+El campo de Gaussian Splatting avanza a un ritmo vertiginoso. Algunos desarrollos destacados:
+
+- **2D Gaussian Splatting (2DGS):** Reemplaza las elipsoides 3D por discos planos, mejorando la reconstrucción de superficies y permitiendo extraer mallas de mayor calidad.
+- **Mip-Splatting:** Aborda artefactos de aliasing al renderizar a diferentes escalas, similar a cómo los mipmaps funcionan en texturas tradicionales.
+- **Compact 3DGS:** Técnicas de compresión que reducen el tamaño de los modelos hasta 25x sin pérdida significativa de calidad.
+- **GaussianEditor y otras herramientas de edición:** Permiten modificar escenas gaussianas de forma intuitiva — borrar objetos, cambiar estilos, insertar elementos.
+- **SLAM con Gaussianas:** Sistemas como SplaTAM utilizan gaussianas para localización y mapeo simultáneo en tiempo real.
+
+## ¿Qué viene después?
+
+La tendencia más clara es la **convergencia** de ambas técnicas:
+
+- **Extracción de mallas desde 3DGS:** Métodos como SuGaR y 2DGS permiten generar mallas texturizadas a partir de representaciones gaussianas, combinando la calidad visual del splatting con la utilidad geométrica de las mallas.
+- **Pipelines híbridos:** Usar 3DGS para previsualización rápida y fotogrametría para el modelo final de producción, ambos alimentados por el mismo conjunto de fotografías.
+- **Estándares abiertos:** Iniciativas para integrar representaciones gaussianas en formatos como glTF facilitarán la adopción en pipelines existentes.
+- **IA generativa + reconstrucción:** Modelos de difusión que generan gaussianas 3D a partir de una sola imagen o texto, democratizando la creación de contenido 3D.
+
+## Conclusión
+
+Gaussian Splatting y fotogrametría tradicional no son técnicas mutuamente excluyentes — son **complementarias**. La fotogrametría sigue siendo insustituible cuando se necesita precisión métrica, geometría editable y compatibilidad universal. 3DGS brilla en visualización inmersiva, renderizado en tiempo real y captura de escenas complejas con efectos de iluminación.
+
+Para proyectos de visualización 360° y experiencias inmersivas como los que realizamos en 4DVISTA, 3D Gaussian Splatting representa una evolución natural: permite crear experiencias visuales más ricas y fluidas, manteniendo tiempos de producción razonables.
+
+La clave está en entender las fortalezas de cada herramienta y elegir — o combinar — según las necesidades del proyecto.
