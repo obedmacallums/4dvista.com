@@ -4,27 +4,25 @@ site:
   base: '/' # Se sobreescribe en astro.config.ts para GitHub Pages
   trailingSlash: false
 
-  googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
+  # googleSiteVerificationId: '' # Agrega aquí tu ID de Google Search Console cuando lo tengas
 
 # Default SEO metadata
 metadata:
   title:
     default: 4dvista.com
     template: '%s — 4dvista.com'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+  description: 'Convierte tus espacios en experiencias digitales inmersivas: tours virtuales 360°, Google Street View, modelado 3D, gemelos digitales y capturas 4D.'
   robots:
     index: true
     follow: true
   openGraph:
     site_name: 4dvista.com
     images:
-      - url: '~/assets/images/default.png'
+      - url: '~/assets/images/image1_tour360.webp'
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
     cardType: summary_large_image
 
 i18n:
