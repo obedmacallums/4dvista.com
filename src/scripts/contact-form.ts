@@ -40,7 +40,7 @@ const sendEmail = async (formData: ContactFormData): Promise<EmailResponse> => {
       console.error('EmailJS configuration is incomplete:', config);
       return {
         success: false,
-        message: 'EmailJS configuration is incomplete. Please check your environment variables.',
+        message: 'El formulario no está disponible en este momento. Por favor escríbenos a contacto@4dvista.com.',
       };
     }
 
@@ -67,19 +67,19 @@ const sendEmail = async (formData: ContactFormData): Promise<EmailResponse> => {
     if (result.status === 200) {
       return {
         success: true,
-        message: 'Your message has been sent successfully! We will get back to you soon.',
+        message: '¡Tu mensaje se ha enviado con éxito! Te responderemos pronto.',
       };
     } else {
       return {
         success: false,
-        message: 'Failed to send message. Please try again later.',
+        message: 'No se pudo enviar el mensaje. Por favor inténtalo de nuevo más tarde.',
       };
     }
   } catch (error) {
     console.error('EmailJS Error:', error);
     return {
       success: false,
-      message: 'An error occurred while sending your message. Please try again later.',
+      message: 'Ocurrió un error al enviar tu mensaje. Por favor inténtalo de nuevo más tarde.',
     };
   }
 };
@@ -146,7 +146,7 @@ export const initializeContactForm = (
 
     if (newSubmitButton) {
       newSubmitButton.disabled = true;
-      newSubmitButton.textContent = 'Sending...';
+      newSubmitButton.textContent = 'Enviando...';
     }
 
     newMessageContainer.classList.add('hidden');

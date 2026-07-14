@@ -5,64 +5,64 @@ import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 
 const metadata = {
-  title: 'Contact',
+  title: 'Contacto',
 };
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <HeroText tagline="Contacto" title="¡Conversemos!" />
 
   <ContactUs
     id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+    title="Cuéntanos de tu proyecto"
+    subtitle="Escríbenos y te responderemos a la brevedad. Cuéntanos qué espacio quieres digitalizar y te ayudaremos a encontrar la mejor solución."
     inputs={[
       {
         type: 'text',
         name: 'name',
-        label: 'Name',
+        label: 'Nombre',
       },
       {
         type: 'email',
         name: 'email',
-        label: 'Email',
+        label: 'Correo electrónico',
       },
     ]}
     textarea={{
-      label: 'Message',
+      label: 'Mensaje',
     }}
     disclaimer={{
       label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+        'Al enviar este formulario, aceptas que utilicemos tus datos de contacto para responder a tu consulta, según nuestra Política de Privacidad.',
     }}
-    description="Our support team typically responds within 24 business hours."
+    button="Enviar mensaje"
   />
 
   <!-- Features2 Widget ************** -->
 
   <Features2
-    title="We are here to help!"
+    title="¡Estamos aquí para ayudarte!"
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
+        title: 'Cotizaciones',
+        description: `Escríbenos para cotizar tu tour virtual 360°, publicación en Google Street View, modelado 3D, gemelo digital o captura 4D. Cada proyecto se evalúa según el tamaño y las características del espacio.`,
       },
       {
-        title: 'Contact sales',
+        title: 'Consultas generales',
         description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+          'Si tienes dudas sobre cómo funcionan nuestros servicios, en qué industrias aplican o qué necesitas para comenzar, contáctanos y te orientamos sin compromiso.',
       },
       {
-        title: 'Technical support',
+        title: 'Soporte',
         description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
+          '¿Ya eres cliente y necesitas ayuda con tu tour virtual, tu publicación en Street View o algún entregable? Escríbenos y lo resolvemos a la brevedad.',
       },
       {
-        title: 'Phone',
-        description: '+56 9 3067 9681',
-        icon: 'tabler:headset',
+        title: 'WhatsApp',
+        description: `<a href="https://wa.me/56930679681?text=Hola%2C%20quiero%20cotizar%20un%20tour%20virtual" target="_blank" rel="noopener" class="hover:underline">+56 9 3067 9681</a>`,
+        icon: 'tabler:brand-whatsapp',
       },
       {
         title: 'Email',
