@@ -1,4 +1,1 @@
-This folder will become an integration for **AstroWind**.
-
-We are working to allow updates to template instances.
-These are changes on the way to new **AstroWind v2**
+Integración local de Astro (`./vendor/integration`) que carga `src/config.yaml` y lo expone como `astrowind:config`. Proviene de la plantilla AstroWind.

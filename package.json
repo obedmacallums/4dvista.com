@@ -1,7 +1,7 @@
 {
   "name": "",
   "version": "1.0.0-beta.52",
-  "description": "AstroWind: A free template using Astro 5.0 and Tailwind CSS. Astro starter theme.",
+  "description": "Sitio web de 4DVISTA: tours virtuales 360°, modelado 3D y capturas 4D.",
   "type": "module",
   "engines": {
     "node": "^18.17.1 || ^20.3.0 || >= 21.0.0"
